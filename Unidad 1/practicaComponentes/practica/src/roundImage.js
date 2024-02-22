@@ -1,8 +1,8 @@
 import Image from 'react-bootstrap/Image';
 
-function RoundImage() {
+function RoundImage(props) {
   return (
-    <Image src="holder.js/171x180" roundedCircle />
+    <Image src={props.Image} width={100} height={100} roundedCircle />
   );
 }
 

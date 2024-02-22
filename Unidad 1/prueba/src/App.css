@@ -24,26 +24,6 @@
   color: white;
 }
 
-#headDiv {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
-
-#searchBarDiv {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
-
-#cardDiv {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-
 .App-link {
   color: #61dafb;
 }

@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 
 function SearchBar() {
   return (
-    <>
+    <div id="searchBarDiv">
       <Form.Control
         type="text"
         id="inputPassword5"
@@ -12,7 +12,7 @@ function SearchBar() {
       <Button>
         Buscar
       </Button>
-    </>
+    </div>
   );
 }
 
