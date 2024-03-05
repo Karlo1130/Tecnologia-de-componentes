@@ -11,10 +11,34 @@ import salchicha from './salchicha.jpg'
 import hot_cakes from './hot_cakes.jpg'
 import hamburger from './hamburger.jpg'
 import cereal from './cereal.jpg'
+import { useEffect, useState } from 'react';
 
 function App() {
+
+  const [pokemonList, setPokemonList] = useState([]);
+  const [pokemonDataList, setPokemonDataList] = useState([]);
+  
+  const pokemonURL = 'https://pokeapi.co/api/v2/pokemon?offset=0&limit=151';
+  
+  useEffect(() => {
+    fetch(pokemonURL)
+      .then(response => response.json())
+      .then(response => {
+        setPokemonList(response.results)
+        const list = response.results;
+        const promises = list.map(pokemon =>
+          fetch(pokemon.url).then(response => response.json())
+        );
+  
+        Promise.all(promises)
+          .then(pokemonDataList => {
+            setPokemonDataList(pokemonDataList)
+          })
+      })
+  }, []);
+
   return (
-    <div className="App">
+    <div className="App"> 
       <div id="headDiv">
         <RoundImage Image={logo}/>
 
@@ -22,14 +46,24 @@ function App() {
       </div>
       <SearchBar />
       <div id="cardDiv">
-      <Card Image={pizza} Title='pizza' Text='pizza'/>
-      <Card Image={hot_dog} Title='hot dog' Text='hot dog'/>
-      <Card Image={mole} Title='mole' Text='mole'/>
-      <Card Image={huevito} Title='huevito' Text='huevito'/>
-      <Card Image={salchicha} Title='salchicha' Text='salchicha'/>
-      <Card Image={hot_cakes} Title='hot cakes' Text='hot cakes'/>
-      <Card Image={hamburger} Title='hamburger' Text='hamburger'/>
-      <Card Image={cereal} Title='cereal' Text='cereal'/>
+      
+      {pokemonDataList.length > 0 ? (
+        pokemonList.map((pokemon, index) => (
+         <Card 
+          Image={pokemonDataList[index].sprites.front_default} 
+          Title={pokemon.name}
+          Text={
+            "Numero: "+pokemonDataList[index].order+
+            "\nPeso: "+pokemonDataList[index].weight}
+          />
+          
+        ))
+      ):(
+        <Card Image={hot_dog} Title='cargando'/>
+
+      )}
+
+
       </div>
 
     </div>

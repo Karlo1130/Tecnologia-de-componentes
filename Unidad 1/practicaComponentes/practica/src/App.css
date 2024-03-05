@@ -44,6 +44,10 @@
   flex-wrap: wrap;
 }
 
+.card-text {
+  white-space: pre-wrap;
+}
+
 .App-link {
   color: #61dafb;
 }
