@@ -15,8 +15,9 @@ import { useEffect, useState } from 'react';
 
 function App() {
 
-  const [pokemonList, setPokemonList] = useState([]);
   const [pokemonDataList, setPokemonDataList] = useState([]);
+  const [search, setSearch] = useState("");
+  const [isPressed, setIsPressed] = useState([])
   
   const pokemonURL = 'https://pokeapi.co/api/v2/pokemon?offset=0&limit=151';
   
@@ -24,7 +25,6 @@ function App() {
     fetch(pokemonURL)
       .then(response => response.json())
       .then(response => {
-        setPokemonList(response.results)
         const list = response.results;
         const promises = list.map(pokemon =>
           fetch(pokemon.url).then(response => response.json())
@@ -37,32 +37,58 @@ function App() {
       })
   }, []);
 
+  const searcher = (e) => {
+    setSearch(e.target.value);
+  }
+
+  
+
   return (
     <div className="App"> 
       <div id="headDiv">
-        <RoundImage Image={logo}/>
 
-        <h1>Recetas de cocina</h1>
+        <h1>Pokedex Kanto</h1>
       </div>
-      <SearchBar />
+      <SearchBar 
+        Search={searcher}
+      />
       <div id="cardDiv">
-      
+
       {pokemonDataList.length > 0 ? (
-        pokemonList.map((pokemon, index) => (
-         <Card 
-          Image={pokemonDataList[index].sprites.front_default} 
-          Title={pokemon.name}
-          Text={
-            "Numero: "+pokemonDataList[index].order+
-            "\nPeso: "+pokemonDataList[index].weight}
-          />
-          
-        ))
-      ):(
-        <Card Image={hot_dog} Title='cargando'/>
+        pokemonDataList.map((pokemon, index) => {
 
+          var searchLength = search.length;
+
+          if (search === ""){
+            return (
+              <Card 
+                Image={pokemon.sprites.front_default} 
+                Title={pokemon.name}
+                Text={
+                  "Numero: " + pokemon.order +
+                  "\nPeso: " + pokemon.weight
+                }
+                Button={false}
+              />
+            );
+          }else if (search === pokemon.name.substring(0, searchLength)) {
+            return (
+              <Card 
+                Image={pokemon.sprites.front_default} 
+                Title={pokemon.name}
+                Text={
+                  "Numero: " + pokemon.order +
+                  "\nPeso: " + pokemon.weight
+                }
+                Button={false}
+              />
+            );
+          }
+          return null; // Opcional: Si no se cumple la condición, no se renderiza nada
+        })
+      ) : (
+        <Card Image={hot_dog} Title='cargando' />
       )}
-
 
       </div>
 

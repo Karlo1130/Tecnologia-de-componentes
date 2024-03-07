@@ -10,7 +10,12 @@ function card(promps) {
         <Card.Text>
           {promps.Text}
         </Card.Text>
-        <Button variant="primary">Mas info</Button>
+        <Button 
+          variant="primary"
+          onChange={promps.Button}
+        >
+          Mas info
+        </Button>
       </Card.Body>
     </Card>
   );
