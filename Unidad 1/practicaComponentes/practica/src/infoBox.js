@@ -6,9 +6,13 @@ function InfoBox({ pokemon, onClose }) {
       <div className="overlay-content">
         <span className="close" onClick={onClose}>&times;</span>
         <h2>{pokemon.name}</h2>
-        <p>Numero: {pokemon.order}</p>
-        <p>Peso: {pokemon.weight}</p>
-        {/* Puedes mostrar más información sobre el Pokémon aquí si lo deseas */}
+        <p>stats</p>
+        <p>hp:              {pokemon.stats[0].base_stat}</p>
+        <p>ataque:          {pokemon.stats[1].base_stat}</p>
+        <p>ataque especial: {pokemon.stats[2].base_stat}</p>
+        <p>defensa:         {pokemon.stats[3].base_stat}</p>
+        <p>defensa especial {pokemon.stats[4].base_stat}</p>
+        <p>velocidad:       {pokemon.stats[5].base_stat}</p>
       </div>
     </div>
   );
