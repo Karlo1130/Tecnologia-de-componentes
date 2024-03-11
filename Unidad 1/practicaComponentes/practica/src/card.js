@@ -2,6 +2,13 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 
 function card(promps) {
+
+  const handleButtonClick = () => {
+    if (promps.onButtonPress) {
+      promps.onButtonPress(promps.Pokemon);
+    }
+  };
+
   return (
     <Card style={{ width: '25%' }}>
       <Card.Img variant="top" src={promps.Image} />
@@ -12,7 +19,7 @@ function card(promps) {
         </Card.Text>
         <Button 
           variant="primary"
-          onChange={promps.Button}
+          onClick={handleButtonClick}
         >
           Mas info
         </Button>

@@ -1,6 +1,7 @@
 import './App.css';
 import Card from './card.js'
 import SearchBar from './searchBar.js'
+import InfoBox from './infoBox.js'
 import RoundImage from './roundImage.js'
 import logo from './cook_logo.png'
 import pizza from './pizza.jpg'
@@ -17,7 +18,7 @@ function App() {
 
   const [pokemonDataList, setPokemonDataList] = useState([]);
   const [search, setSearch] = useState("");
-  const [isPressed, setIsPressed] = useState([])
+  const [selectedPokemon, setSelectedPokemon] = useState(null);
   
   const pokemonURL = 'https://pokeapi.co/api/v2/pokemon?offset=0&limit=151';
   
@@ -41,7 +42,13 @@ function App() {
     setSearch(e.target.value);
   }
 
-  
+  const handleButtonPress = (pokemon) => {
+    setSelectedPokemon(pokemon);
+  };
+
+  const handleCloseBox = () => {
+    setSelectedPokemon(null);
+  };
 
   return (
     <div className="App"> 
@@ -68,7 +75,8 @@ function App() {
                   "Numero: " + pokemon.order +
                   "\nPeso: " + pokemon.weight
                 }
-                Button={false}
+                Pokemon={pokemon}
+                onButtonPress={handleButtonPress}
               />
             );
           }else if (search === pokemon.name.substring(0, searchLength)) {
@@ -80,17 +88,22 @@ function App() {
                   "Numero: " + pokemon.order +
                   "\nPeso: " + pokemon.weight
                 }
-                Button={false}
+                Pokemon={pokemon}
+                onButtonPress={handleButtonPress}
               />
             );
           }
-          return null; // Opcional: Si no se cumple la condición, no se renderiza nada
+          return null;
         })
       ) : (
         <Card Image={hot_dog} Title='cargando' />
       )}
 
       </div>
+      
+      {selectedPokemon && (
+        <InfoBox pokemon={selectedPokemon} onClose={handleCloseBox} />
+      )}
 
     </div>
   );
